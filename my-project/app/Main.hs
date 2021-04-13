@@ -16,11 +16,7 @@ main = do
     (defs, is) <- query_ conn "SELECT * FROM memos"
     --print =<< Streams.toList is
 
-    mapM_ (mapM f) =<< Streams.toList is
-        where
-        -- 受け取った引数が MySQLText の場合だけ、取り出した文字列をputStrLnする関数
-        f :: MySQLValue -> IO ()
-
+    let f :: MySQLValue -> IO ()
         f (MySQLText text) = do
             T.putStr text
             T.putStr " "
@@ -34,6 +30,6 @@ main = do
             T.putStrLn ""
 
         f _other = return ()
-
+    in mapM_ (mapM f) =<< Streams.toList is
 
     print "hello"
