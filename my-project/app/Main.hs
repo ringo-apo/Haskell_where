@@ -30,6 +30,6 @@ main = do
             T.putStrLn ""
 
         f _other = return ()
-    in mapM_ (mapM f) =<< Streams.toList is
+    mapM_ (mapM f) =<< Streams.toList is
 
     print "hello"
